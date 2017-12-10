@@ -28,7 +28,7 @@ int main()
 	IntegerNumber x(s1);
 	IntegerNumber y(s2);
 	ofstream fout("test.out");
-	IntegerNumber z = x - y;
+	IntegerNumber z = x % y;
 	z.Print(cout);
 	_getch();
 	return 0;

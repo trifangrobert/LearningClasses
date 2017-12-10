@@ -330,6 +330,12 @@ IntegerNumber IntegerNumber::MakeDifference(IntegerNumber a, IntegerNumber b)
 IntegerNumber MathLib::IntegerNumber::MakeProduct(IntegerNumber a, IntegerNumber b)
 {
 	IntegerNumber c(a.m_dim + b.m_dim + 10);
+	if ((a.m_v[1] == 0 & a.m_dim == 1) || (b.m_v[1] == 0 & b.m_dim == 1))
+	{
+		c.m_dim = 1;
+		c.m_v[1] = 0;
+		return c;
+	}
 	int i = 1, j = 1, poz = 0, tr1 = 0, tr2 = 0, k;
 	for (j = 1;j <= b.m_dim;++j)
 	{
@@ -393,6 +399,14 @@ IntegerNumber MathLib::IntegerNumber::MakeDivision(IntegerNumber a, IntegerNumbe
 IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber a, IntegerNumber b)
 {
 	IntegerNumber c(max(a.m_dim, b.m_dim) - min(a.m_dim, b.m_dim) + 10);
+	if (LessThanHelper(a, b))
+	{
+		c.m_dim = a.m_dim;
+		c.m_isNegative = a.m_isNegative;
+		for (int i = 1;i <= a.m_dim;++i)
+			c.m_v[i] = a.m_v[i];
+		return c;
+	}
 	int x = 0;
 	for (int i = b.m_dim;i >= 1;--i)
 		x = x * 10 + b.m_v[i];
