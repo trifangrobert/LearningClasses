@@ -6,19 +6,20 @@ namespace MathLib
 	class IntegerNumber
 	{
 	public:
-		IntegerNumber();
+		IntegerNumber(int vectorLength = 0);
 		IntegerNumber(char s[]);
+		IntegerNumber(const IntegerNumber &other);
+		//~IntegerNumber();
 
 		void Print(std::ostream& out);
 
 		bool operator<(const IntegerNumber& other)const;
+		IntegerNumber& operator=(const IntegerNumber & other);
 		IntegerNumber operator+(const IntegerNumber & other)const;
 		IntegerNumber operator-(const IntegerNumber &other)const;
 		IntegerNumber operator*(const IntegerNumber & other)const;
 		IntegerNumber operator/(const IntegerNumber & other)const;
 		IntegerNumber operator%(const IntegerNumber & other)const;
-
-		static const int GetMaxDim();
 
 	private:
 		IntegerNumber MakeSum(IntegerNumber other)const;
@@ -32,9 +33,9 @@ namespace MathLib
 		static IntegerNumber MakeProduct(IntegerNumber a, IntegerNumber b);
 		static IntegerNumber MakeDivision(IntegerNumber a, IntegerNumber b);
 		static IntegerNumber MakeModulo(IntegerNumber a, IntegerNumber b);
-		static const int MAXDIM = 100;
-		int m_v[MAXDIM];
+		int *m_v;
 		int m_dim;
+		int m_capacity = 0;
 		bool m_isNegative;
 		bool m_isValid = true;
 	};

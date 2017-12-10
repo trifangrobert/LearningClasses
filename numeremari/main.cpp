@@ -28,11 +28,8 @@ int main()
 	IntegerNumber x(s1);
 	IntegerNumber y(s2);
 	ofstream fout("test.out");
-	IntegerNumber z = x % y;
-	IntegerNumber w = x + y;
+	IntegerNumber z = x - y;
 	z.Print(cout);
-	cout << "\n";
-	w.Print(cout);
 	_getch();
 	return 0;
 }
