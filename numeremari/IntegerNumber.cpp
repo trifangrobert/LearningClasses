@@ -5,32 +5,36 @@
 using namespace std;
 using namespace MathLib;
 
-IntegerNumber::IntegerNumber(int vectorLength)
+IntegerNumber::IntegerNumber(long long nr)
 {
-	if (vectorLength == 0)
+	if (nr < 0)
+		this->m_isNegative = true;
+	else
+		this->m_isNegative = false;
+	this->m_dim = NumberOfDigits(nr);
+	this->m_capacity = this->m_dim + 10;
+	this->m_v = new int[this->m_capacity];
+	memset(this->m_v, 0, m_capacity * sizeof(int));
+	nr = abs(nr);
+	int pos = 0;
+	while (nr > 0)
 	{
-		vectorLength = 5;
+		this->m_v[++pos] = nr % 10;
+		nr /= 10;
 	}
-	m_capacity = vectorLength;
-	m_dim = 1;
-	m_isNegative = false;
-	m_isValid = true;
-	m_v = new int[vectorLength];
-	for (int i = 0;i < vectorLength;++i)
-		m_v[i] = 0;
 }
 
-IntegerNumber::IntegerNumber(char s[])
+IntegerNumber::IntegerNumber(string s)
 {
 	m_dim = 0;
 	m_isNegative = false;
-	int lgSir = strlen(s);
+	int lgSir = s.size();
 	int vectorLength = lgSir + 10;
 	m_v = new int[vectorLength];
 	m_capacity = vectorLength;
 	for (int i = 0;i < vectorLength;++i)
 		m_v[i] = 0;
-	int x = 0, n = lgSir - 1, pos = 0;;
+	int x = 0, n = lgSir - 1, pos = 0;
 	if (s[0] == '-')
 	{
 		++x;
@@ -43,7 +47,7 @@ IntegerNumber::IntegerNumber(char s[])
 	m_dim = pos;
 }
 
-MathLib::IntegerNumber::IntegerNumber(const IntegerNumber & other)
+IntegerNumber::IntegerNumber(const IntegerNumber & other)
 {
 	this->m_dim = other.m_dim;
 	this->m_capacity = other.m_capacity;
@@ -54,6 +58,39 @@ MathLib::IntegerNumber::IntegerNumber(const IntegerNumber & other)
 	{
 		this->m_v[i] = other.m_v[i];
 	}
+}
+
+IntegerNumber::~IntegerNumber()
+{
+	delete[] m_v;
+}
+
+void IntegerNumber::Reserve(int x)
+{
+	int *p = new int[x + 1];
+	int lg = min(x, this->m_dim);
+	for (int i = this->m_dim, j = lg;j >= 1;--i, --j)
+	{
+		p[j] = this->m_v[i];
+	}
+	p[0] = 0;
+	for (int i = lg + 1;i <= x;++i)
+	{
+		p[i] = 0;
+	}
+	delete[] this->m_v;
+	this->m_v = p;
+	this->m_capacity = x + 1;
+	this->m_dim = lg;
+}
+
+void IntegerNumber::Reset()
+{
+	for (int i = 1;i <= this->m_dim;++i)
+	{
+		this->m_v[i] = 0;
+	}
+	this->m_dim = 1;
 }
 
 IntegerNumber& IntegerNumber::operator=(const IntegerNumber & other)
@@ -96,12 +133,12 @@ IntegerNumber IntegerNumber::operator*(const IntegerNumber & other) const
 	return this->MakeProduct(other);
 }
 
-IntegerNumber IntegerNumber::operator/(const IntegerNumber & other) const
+IntegerNumber IntegerNumber::operator/(const int & other) const
 {
 	return this->MakeDivision(other);
 }
 
-IntegerNumber IntegerNumber::operator%(const IntegerNumber & other) const
+IntegerNumber IntegerNumber::operator%(const int & other) const
 {
 	return this->MakeModulo(other);
 }
@@ -203,17 +240,17 @@ IntegerNumber MathLib::IntegerNumber::MakeProduct(IntegerNumber other) const
 	return aux;
 }
 
-IntegerNumber MathLib::IntegerNumber::MakeDivision(IntegerNumber other) const
+IntegerNumber MathLib::IntegerNumber::MakeDivision(int other) const
 {
 	IntegerNumber aux = MakeDivision(*this, other);
-	if ((!this->m_isNegative && !other.m_isNegative) || (this->m_isNegative && other.m_isNegative))
+	if ((!this->m_isNegative && !(other < 0)) || (this->m_isNegative && other < 0))
 		aux.m_isNegative = false;
 	else
 		aux.m_isNegative = true;
 	return aux;
 }
 
-IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber other) const
+IntegerNumber MathLib::IntegerNumber::MakeModulo(int other) const
 {
 	return MakeModulo(*this, other);
 }
@@ -229,6 +266,21 @@ void IntegerNumber::Print(ostream & out)
 		for (int i = this->m_dim;i >= 1;--i)
 			out << this->m_v[i];
 	}
+}
+
+int IntegerNumber::GetSize()const
+{
+	return this->m_dim;
+}
+
+int IntegerNumber::GetCapacity()const
+{
+	return this->m_capacity;
+}
+
+int const * IntegerNumber::GetRawData()const
+{
+	return this->m_v;
 }
 
 bool IntegerNumber::LessThanHelper(IntegerNumber x, IntegerNumber y)
@@ -258,8 +310,8 @@ bool IntegerNumber::LessThanHelper(IntegerNumber x, IntegerNumber y)
 
 IntegerNumber IntegerNumber::MakeSum(IntegerNumber a, IntegerNumber b)
 {
-	IntegerNumber c(max(a.m_dim, b.m_dim) + 10);
-	//c.m_v = new int[max(a.m_dim, b.m_dim) + 10];
+	IntegerNumber c;
+	c.Reserve(max(a.m_dim, b.m_dim) + 10);
 	int i = 1, tr = 0, poz = 1;
 	while (i <= a.m_dim && i <= b.m_dim)
 	{
@@ -292,7 +344,8 @@ IntegerNumber IntegerNumber::MakeSum(IntegerNumber a, IntegerNumber b)
 
 IntegerNumber IntegerNumber::MakeDifference(IntegerNumber a, IntegerNumber b)
 {
-	IntegerNumber c(max(a.m_dim, b.m_dim) + 10);
+	IntegerNumber c;
+	c.Reserve(max(a.m_dim, b.m_dim) + 10);
 	int i = 1, j;
 	while (i <= a.m_dim && i <= b.m_dim)
 	{
@@ -329,8 +382,9 @@ IntegerNumber IntegerNumber::MakeDifference(IntegerNumber a, IntegerNumber b)
 
 IntegerNumber MathLib::IntegerNumber::MakeProduct(IntegerNumber a, IntegerNumber b)
 {
-	IntegerNumber c(a.m_dim + b.m_dim + 10);
-	if ((a.m_v[1] == 0 & a.m_dim == 1) || (b.m_v[1] == 0 & b.m_dim == 1))
+	IntegerNumber c;
+	c.Reserve(a.m_dim + b.m_dim + 10);
+	if ((a.m_v[1] == 0 && a.m_dim == 1) || (b.m_v[1] == 0 && b.m_dim == 1))
 	{
 		c.m_dim = 1;
 		c.m_v[1] = 0;
@@ -370,13 +424,12 @@ IntegerNumber MathLib::IntegerNumber::MakeProduct(IntegerNumber a, IntegerNumber
 	return c;
 }
 
-IntegerNumber MathLib::IntegerNumber::MakeDivision(IntegerNumber a, IntegerNumber b)
+IntegerNumber MathLib::IntegerNumber::MakeDivision(IntegerNumber a, int b)
 {
-	IntegerNumber c(max(a.m_dim, b.m_dim) - min(a.m_dim, b.m_dim) + 10);
-	int x = 0;
-	for (int i = b.m_dim;i >= 1;--i)
-		x = x * 10 + b.m_v[i];
-	if (x == 0)
+	int lengthOfb = NumberOfDigits(b);
+	IntegerNumber c;
+	c.Reserve(max(a.m_dim, lengthOfb) - min(a.m_dim, lengthOfb) + 10);
+	if (b == 0)
 	{
 		c.m_isValid = false;
 		return c;
@@ -386,19 +439,21 @@ IntegerNumber MathLib::IntegerNumber::MakeDivision(IntegerNumber a, IntegerNumbe
 	for (int i = 1;i <= a.m_dim;++i)
 	{
 		tr = tr * 10 + a.m_v[i];
-		aux = tr / x;
+		aux = tr / b;
 		if (!(aux == 0 && k == 0))
 			c.m_v[++pos] = aux;
-		tr -= aux * x;
+		tr -= aux * b;
 	}
 	c.m_dim = pos;
 	reverse(c.m_v + 1, c.m_v + c.m_dim + 1);
 	return c;
 }
 
-IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber a, IntegerNumber b)
+IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber a, int b)
 {
-	IntegerNumber c(max(a.m_dim, b.m_dim) - min(a.m_dim, b.m_dim) + 10);
+	int lengthOfb = NumberOfDigits(b);
+	IntegerNumber c;
+	c.Reserve(max(a.m_dim, lengthOfb) - min(a.m_dim, lengthOfb) + 10);
 	if (LessThanHelper(a, b))
 	{
 		c.m_dim = a.m_dim;
@@ -407,10 +462,7 @@ IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber a, IntegerNumber 
 			c.m_v[i] = a.m_v[i];
 		return c;
 	}
-	int x = 0;
-	for (int i = b.m_dim;i >= 1;--i)
-		x = x * 10 + b.m_v[i];
-	if (x == 0)
+	if (b == 0)
 	{
 		c.m_isValid = false;
 		return c;
@@ -420,8 +472,8 @@ IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber a, IntegerNumber 
 	for (int i = 1;i <= a.m_dim;++i)
 	{
 		tr = tr * 10 + a.m_v[i];
-		aux = tr / x;
-		tr -= aux * x;
+		aux = tr / b;
+		tr -= aux * b;
 	}
 	if (tr == 0)
 		c.m_v[++pos] = 0;
@@ -433,5 +485,19 @@ IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber a, IntegerNumber 
 	c.m_dim = pos;
 	reverse(c.m_v + 1, c.m_v + c.m_dim + 1);
 	return c;
+}
+
+int MathLib::IntegerNumber::NumberOfDigits(long long a)
+{
+	if (a == 0)
+		return 1;
+	a = abs(a);
+	int count = 0;
+	while (a > 0)
+	{
+		++count;
+		a /= 10;
+	}
+	return count;
 }
 
