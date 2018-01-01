@@ -18,6 +18,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MathLib\IntegerNumber.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MathLib\IntegerNumber.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.in" />
+    <None Include="test.out" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CB4C1B5C-A5FA-4492-AA39-35BD1CE75740}</ProjectGuid>
     <RootNamespace>numeremari</RootNamespace>
@@ -68,7 +79,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)MathLib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)MathLib;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -109,17 +125,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\IntegerNumber.cpp" />
-    <ClCompile Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\test.in" />
-    <None Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\test.out" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\IntegerNumber.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

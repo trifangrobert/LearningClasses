@@ -18,19 +18,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\IntegerNumber.cpp">
+    <ClCompile Include="MathLib\IntegerNumber.cpp">
       <Filter>MathLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\test.in" />
-    <None Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\test.out" />
+    <None Include="test.in" />
+    <None Include="test.out" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Programming %3b)\Mircea_pregatire\numeremari\numeremari\IntegerNumber.h">
+    <ClInclude Include="MathLib\IntegerNumber.h">
       <Filter>MathLib</Filter>
     </ClInclude>
   </ItemGroup>

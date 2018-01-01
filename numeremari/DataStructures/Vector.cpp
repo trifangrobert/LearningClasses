@@ -1,0 +1,3 @@
+/*
+Bagam functiile vectorului din STL
+*/
