@@ -233,10 +233,21 @@ IntegerNumber IntegerNumber::MakeDifference(IntegerNumber other)const
 IntegerNumber MathLib::IntegerNumber::MakeProduct(IntegerNumber other) const
 {
 	IntegerNumber aux = MakeProduct(*this, other);
-	if ((!this->m_isNegative && !other.m_isNegative) || (this->m_isNegative && other.m_isNegative))
+	if (aux.m_v[1] == 0 && aux.m_dim == 1)
+	{
 		aux.m_isNegative = false;
-	else
-		aux.m_isNegative = true;
+	}
+	else 
+	{
+		if ((!this->m_isNegative && !other.m_isNegative) || (this->m_isNegative && other.m_isNegative))
+		{
+			aux.m_isNegative = false;
+		}
+		else
+		{
+			aux.m_isNegative = true;
+		}
+	}
 	return aux;
 }
 
@@ -429,6 +440,7 @@ IntegerNumber MathLib::IntegerNumber::MakeDivision(IntegerNumber a, int b)
 	int lengthOfb = NumberOfDigits(b);
 	IntegerNumber c;
 	c.Reserve(max(a.m_dim, lengthOfb) - min(a.m_dim, lengthOfb) + 10);
+	b = abs(b);
 	if (b == 0)
 	{
 		c.m_isValid = false;
@@ -444,8 +456,15 @@ IntegerNumber MathLib::IntegerNumber::MakeDivision(IntegerNumber a, int b)
 			c.m_v[++pos] = aux;
 		tr -= aux * b;
 	}
-	c.m_dim = pos;
-	reverse(c.m_v + 1, c.m_v + c.m_dim + 1);
+	if (pos == 0)
+	{
+		c.m_v[1] = 0;
+		c.m_dim = 1;
+	}
+	else
+	{
+		reverse(c.m_v + 1, c.m_v + c.m_dim + 1);
+	}
 	return c;
 }
 
@@ -454,6 +473,7 @@ IntegerNumber MathLib::IntegerNumber::MakeModulo(IntegerNumber a, int b)
 	int lengthOfb = NumberOfDigits(b);
 	IntegerNumber c;
 	c.Reserve(max(a.m_dim, lengthOfb) - min(a.m_dim, lengthOfb) + 10);
+	b = abs(b);
 	if (LessThanHelper(a, b))
 	{
 		c.m_dim = a.m_dim;
