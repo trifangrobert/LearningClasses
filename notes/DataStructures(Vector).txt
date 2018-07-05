@@ -1,0 +1,32 @@
+firstly, let 100 be the length of the vector
+it will change its size to 2 * first size when there is no space for other push_backs
+it will also change its size to 1/2 * first size when there is too much empty space after pop_backs
+
+increasing space involves a new pointer which will contain all data from first pointer and will have double length
+decreasing as same as increasing will use an auxiliar pointer which will contain all data from first pointer and will have halved length
+
+Funcions:
+(constructor) - done
+(destructor) - ?
+operator= - done
+begin - done
+end - done
+size - done
+resize - done
+front - hmm
+back - hmm
+capacity - done
+empty - done
+reserve - done
+operator[] - ?
+push_back - done
+pop_back - done
+insert - done
+erase - done
+swap - done
+clear - done
+
+de facut doua functii private care dubleaza/injumatatesc m_capacity (cum mai exact le fac)
+front si back cu eroarea aia
+github
+f(int x = 0) pun doar le definire

@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DataStructures\Vector.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathLib\IntegerNumber.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataStructures\Vector.h" />
     <ClInclude Include="MathLib\IntegerNumber.h" />
   </ItemGroup>
   <ItemGroup>

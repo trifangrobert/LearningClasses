@@ -16,6 +16,9 @@
     <Filter Include="MathLib">
       <UniqueIdentifier>{a775e9f1-0d89-4621-9ed8-d21ef2d21dc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataStructures">
+      <UniqueIdentifier>{280743b4-2b9e-4aa3-ac95-b6777d9269dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -23,6 +26,9 @@
     </ClCompile>
     <ClCompile Include="MathLib\IntegerNumber.cpp">
       <Filter>MathLib</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStructures\Vector.cpp">
+      <Filter>DataStructures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,6 +38,9 @@
   <ItemGroup>
     <ClInclude Include="MathLib\IntegerNumber.h">
       <Filter>MathLib</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\Vector.h">
+      <Filter>DataStructures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

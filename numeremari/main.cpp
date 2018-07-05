@@ -1,4 +1,8 @@
+#include <iostream>
+#include <conio.h>
+
 #include "IntegerNumber.h"
+#include "DataStructures/Vector.h"
 #include <vector>
 #include <string>
 
@@ -7,19 +11,25 @@
 
 using namespace std;
 using namespace MathLib;
+using namespace DataStructures;
 
-string s1, s2;
+int a[10];
 
 int main()
 {
 	ifstream fin("test.in");
 	ofstream fout("test.out");
-	fin >> s1;
-	fin >> s2;
-	IntegerNumber x(s1);
-	IntegerNumber y(s2);
-	IntegerNumber z = x * y;
-	z.Print(fout);
-	fin.close();
+	Vector x;
+	x.Push_back(1);
+	x.Push_back(2);
+	x.Push_back(3);
+	x.Pop_back();
+	for (int i = 0;i < x.Size();++i)
+		cout << x.GetValue(i) << " ";
+	try(x.Front())
+	{
+		catch 
+	}
+	_getch();
 	return 0;
 }
