@@ -9,8 +9,10 @@ namespace DataStructures
 	public:
 		Vector();
 		Vector(int n, int value = 0);
+		~Vector();
 
 		void operator=(Vector x);
+		int& operator[](int x);
 
 		void Push_back(int x);
 		void Pop_back();

@@ -25,6 +25,11 @@ DataStructures::Vector::Vector(int n, int value)
 		this->m_v[i] = value;
 }
 
+DataStructures::Vector::~Vector()
+{
+	delete[] this->m_v;
+}
+
 void DataStructures::Vector::operator=(Vector x)
 {
 	delete[] this->m_v;
@@ -32,6 +37,11 @@ void DataStructures::Vector::operator=(Vector x)
 	this->m_dim = x.m_dim;
 	for (int i = 0;i < x.m_dim;++i)
 		this->m_v[i] = x.m_v[i];
+}
+
+int & DataStructures::Vector::operator[](int x)
+{
+	return this->m_v[x];
 }
 
 void Vector::Push_back(int x)
