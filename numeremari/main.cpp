@@ -22,5 +22,6 @@ int main()
 	for (int i = 0;i < v.Size();++i)
 		cout << v[i] << " ";
 	_getch();
+
 	return 0;
 }
