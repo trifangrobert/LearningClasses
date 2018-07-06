@@ -7,7 +7,7 @@ decreasing as same as increasing will use an auxiliar pointer which will contain
 
 Funcions:
 (constructor) - done
-(destructor) - ?
+(destructor) - done
 operator= - done
 begin - done
 end - done
@@ -18,7 +18,7 @@ back - hmm
 capacity - done
 empty - done
 reserve - done
-operator[] - ?
+operator[] - done
 push_back - done
 pop_back - done
 insert - done
@@ -30,3 +30,5 @@ de facut doua functii private care dubleaza/injumatatesc m_capacity (cum mai exa
 front si back cu eroarea aia
 github
 f(int x = 0) pun doar le definire
+
+

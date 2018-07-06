@@ -1,43 +1,49 @@
-#pragma once
-
+#ifndef VECTOR_H
+#define VECTOR_H
 #include <string>
 
 namespace DataStructures
 {
+	template<typename T> 
 	class Vector
 	{
 	public:
 		Vector();
-		Vector(int n, int value = 0);
+		Vector(int n, T value = T());
+		Vector(const Vector<T>& x);
 		~Vector();
 
-		void operator=(Vector x);
-		int& operator[](int x);
+		Vector& operator=(const Vector<T>& x);
+		T& operator[](int x);
 
-		void Push_back(int x);
+		void Push_back(T x);
 		void Pop_back();
 		int Size();
-		int GetValue(int pos);
 		int GetDim();
 		int GetCapacity();
 		bool Empty();
-		void Insert(int x, int pos);
+		void Insert(T x, int pos);
 		void Erase(int pos);
 		void Clear();
-		void Swap(Vector &other);
-		void Resize(int n, int value = 0);
+		void Swap(Vector<T>& other);
+		void Resize(int n, T value = T());
 		void Reserve(int n);
-		int Front();
-		int Back();
-		int* Begin();
-		int* End();
+		T Front();
+		T Back();
+		T* Begin();
+		T* End();
 
 	private:
-		void IncreaseSize(Vector &x);
-		void DecreaseSize(Vector &x);
+		void IncreaseSize(Vector<T>& x);
+		void DecreaseSize(Vector<T>& x);
 
-		int *m_v;
+		static const int m_defaultSize = 1;
+		T* m_v;
 		int m_capacity;
 		int m_dim;
 	};
 }
+
+#include "Vector.cpp"
+
+#endif

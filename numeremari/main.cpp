@@ -15,8 +15,12 @@ using namespace DataStructures;
 
 int main()
 {
-	ifstream fin("test.in");
-	ofstream fout("test.out");
+	Vector <char> v;
+	v.Push_back('a');
+	v.Push_back('b');
+	v.Push_back('c');
+	for (int i = 0;i < v.Size();++i)
+		cout << v[i] << " ";
 	_getch();
 	return 0;
 }
